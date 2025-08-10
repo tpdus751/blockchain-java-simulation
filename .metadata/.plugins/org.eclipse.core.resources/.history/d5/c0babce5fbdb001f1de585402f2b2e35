@@ -1,0 +1,20 @@
+package core;
+
+import util.Util;
+
+public class BlockChainStarter {
+
+	public static void main(String[] args) {
+		
+		
+		int nonce = 0;
+		while(true) {
+			if (Util.getHash(nonce + "").subString(0, 6).equals("0000000")) {
+				
+			}
+		}
+		
+		
+	}
+
+}

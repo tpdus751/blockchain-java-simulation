@@ -1,0 +1,7 @@
+package core;
+
+public class Transaction {
+	String sender;
+	String receiver;
+	double amount;
+}

@@ -1,0 +1,9 @@
+package util;
+
+public class Util {
+	
+	public static String getHash(String input) {
+		StringBuffer result = new StringBuffer();
+	}
+	
+}
