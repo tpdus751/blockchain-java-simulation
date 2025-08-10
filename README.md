@@ -154,7 +154,7 @@ private boolean meetsTarget(String hash) {
 }
 ```
 
-체인 검증 유틸 추가
+체인 검증 유틸 추가(불일치를 잡아내는 검사 도구)
 
 ```java
 boolean validateChain(List<Block> chain) {
