@@ -26,3 +26,13 @@ src/
  └─ util/
      └─ Util.java   // SHA-256 해시 유틸
 ```
+
+## 기술 스택
+Language: Java
+
+Crypto: SHA-256 (Java Security MessageDigest)
+
+Data: ArrayList<>
+
+Consensus: Proof of Work (leading zeros)
+
