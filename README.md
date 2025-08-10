@@ -36,3 +36,7 @@ Data: ArrayList<>
 
 Consensus: Proof of Work (leading zeros)
 
+## ▶️ 실행 방법
+JDK 8+ 설치
+
+IDE에서 BlockChainStarter 실행
