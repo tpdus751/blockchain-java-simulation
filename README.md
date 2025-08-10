@@ -112,3 +112,59 @@ block4.getInformation();
 ...
 ```
 
+## 문제와 해결 (개발 기록)
+문제 1: 단순 블록 객체를 넘어, 이전 해시를 이용한 체인 구조와 블록 해시 설계 필요
+해결: previousBlockHash 필드로 체인 연결, 블록 해시는 nonce + 트랜잭션 + 이전 해시를 해싱
+
+문제 2: Java에서 SHA-256 해시 구현 난이도
+해결: MessageDigest.getInstance("SHA-256") 기반 Util.getHash() 유틸 작성
+
+문제 3: PoW 채굴 조건(예: 0000 프리픽스) 구현 필요
+해결: mine()에서 nonce를 반복 증가시키며 조건 만족 시점 탐지
+
+문제 4: 트랜잭션 변경이 블록 해시에 반영되어 변조 감지가 가능해야 함
+해결: 블록 해시 생성 시 트랜잭션 문자열을 포함, 변경 시 해시가 달라져 연쇄 무결성 검증 가능
+
+## 학습 포인트
+해시 함수의 
+1. 축약성(어떤 길이의 입력이든 고정 길이로 변환)
+2. 결정성(같은 입력은 항상 같은 해시값)
+3. 충돌내성(서로 다른 입력이 같은 해시값을 만들 가능성이 매우 낮음)
+위 3가지 성질이 블록체인 무결성의 핵심임을 체감
+
+PoW는 “확률적 탐색” 문제이므로 난이도 ↑ → 연산량 ↑ → 채굴 시간 ↑
+
+블록이 이전 해시에 강하게 의존하므로, 중간 블록 변조 시 이후 전부 재채굴 필요
+
+## 개선/리팩토링 아이디어
+
+제네릭/타입 안정성
+
+```java
+// before: new ArrayList()
+new ArrayList<Transaction>()
+```
+
+난이도 파라미터화
+
+```java
+private int difficulty = 4;
+private boolean meetsTarget(String hash) {
+    return hash.startsWith("0".repeat(difficulty));
+}
+```
+
+체인 검증 유틸 추가
+
+```java
+boolean validateChain(List<Block> chain) {
+    for (int i = 1; i < chain.size(); i++) {
+        Block prev = chain.get(i - 1);
+        Block curr = chain.get(i);
+        boolean ok = curr.getPreviousBlockHash().equals(prev.getBlockHash())
+                     && curr.getBlockHash().equals(curr.recalculateHash());
+        if (!ok) return false;
+    }
+    return true;
+}
+```
