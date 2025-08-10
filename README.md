@@ -40,3 +40,34 @@ Consensus: Proof of Work (leading zeros)
 JDK 8+ 설치
 
 IDE에서 BlockChainStarter 실행
+
+## 동작 개요
+Block 해시
+```java
+public String getBlockHash() {
+    String transactionInformations = "";
+    for (int i = 0; i < transactionList.size(); i++) {
+        transactionInformations += transactionList.get(i).getInformation();
+    }
+    return Util.getHash(nonce + transactionInformations + previousBlockHash);
+}
+```
+nonce + 트랜잭션 문자열 + 이전 해시를 합쳐 SHA-256 해시 생성.
+
+트랜잭션이 바뀌면 블록 해시가 달라져 체인 무결성이 깨짐.
+
+PoW 채굴
+```java
+public void mine() {
+    while (true) {
+        if (getBlockHash().substring(0, 4).equals("0000")) {
+            System.out.println(blockID + "번째 블록의 채굴에 성공하였습니다.");
+            break;
+        }
+        nonce++;
+    }
+}
+```
+0000(난이도 4)으로 시작하는 해시가 나올 때까지 nonce 증가.
+
+난이도를 올릴수록(예: 000000) 채굴 시간이 급격히 증가.
