@@ -13,5 +13,16 @@ PoW 채굴: 해시가 0000으로 시작할 때까지 nonce 증가
 
 트랜잭션 리스트 포함 및 변경 시 해시 변화 시연
 
-📚 학습/참고
+## 📚 학습/참고
 유튜브: 나동빈 — 자바(Java)로 이해하는 블록체인 이론과 실습
+
+## 프로젝트 구조
+```
+src/
+ ├─ core/
+ │   ├─ Block.java
+ │   ├─ BlockChainStarter.java
+ │   └─ Transaction.java
+ └─ util/
+     └─ Util.java   // SHA-256 해시 유틸
+```
